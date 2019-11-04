@@ -15,6 +15,14 @@ public class AddressBook extends DefaultListModel {
 			super.remove(index);
 		}
 	}
+	
+	public int size() {
+		return this.getSize();
+	}
+	
+	public void clear() {
+		super.clear();
+	}
 		
 }
 

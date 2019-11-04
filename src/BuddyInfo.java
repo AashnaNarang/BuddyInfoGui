@@ -1,13 +1,29 @@
 public class BuddyInfo {
 
 	private String name, address, phone;
+	private int age;
 
 	/* Constructor
 	*/
-	public BuddyInfo(String name, String address, String phone) {
+
+
+	public BuddyInfo(String name, String address, String phone, int age) {
 		this.name = name;
 		this.address = address;
 		this.phone = phone;
+		this.age = age;
+	}
+	
+	public BuddyInfo(BuddyInfo b) {
+		this(b.getName(), b.getAddress(), b.getPhone(), b.getAge());
+	}
+	
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 	public String getName() {
@@ -47,6 +63,14 @@ public class BuddyInfo {
 	
 	public String toString() {
 		return "Name: " + this.name + "    Address: " + this.address + "    Phone: " + phone;
+	}
+	
+	public String greeting() {
+		return "Hi " + this.name;
+	}
+	
+	public boolean isOver18() {
+		return this.age > 18;
 	}
 	
 }

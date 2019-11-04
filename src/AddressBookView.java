@@ -63,7 +63,8 @@ public class AddressBookView extends JFrame implements ActionListener  {
 				String name = JOptionPane.showInputDialog("Please enter the buddy's name");
 				String address = JOptionPane.showInputDialog("Please enter " + name + "'s address");
 				String phone = JOptionPane.showInputDialog("Please enter " + name + "'s phone number");
-				BuddyInfo b = new BuddyInfo(name, address, phone);
+				int age = Integer.parseInt(JOptionPane.showInputDialog("Please enter " + name + "'s age"));
+				BuddyInfo b = new BuddyInfo(name, address, phone, age);
 				this.addy.addBuddy(b);
 			}
 		} else {
