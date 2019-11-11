@@ -1,4 +1,12 @@
-public class BuddyInfo {
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Serializable;
+
+public class BuddyInfo implements Serializable {
 
 	private String name, address, phone;
 	private int age;
@@ -62,7 +70,7 @@ public class BuddyInfo {
 	}
 	
 	public String toString() {
-		return "Name: " + this.name + "    Address: " + this.address + "    Phone: " + phone;
+		return this.name + "#" + this.address + "#" + this.phone + "#" + this.age;
 	}
 	
 	public String greeting() {
@@ -72,5 +80,41 @@ public class BuddyInfo {
 	public boolean isOver18() {
 		return this.age > 18;
 	}
+	
+	
+	public static BuddyInfo importBuddy(String info) {
+		String[] s = info.split("#");
+		for(String st : s) {
+			System.out.println(st);
+		}
+		BuddyInfo b = new BuddyInfo(s[0], s[1], s[2], Integer.parseInt(s[3]));
+		return b;		
+	}
+	
+//	public static void removeFromFile(String buddyInfo, String filename) {
+//		String curr = "";
+//		AddressBook book = new AddressBook();
+//		BufferedReader reader;
+//		try {
+//			reader = new BufferedReader(new FileReader(filename));
+//			while ((curr = reader.readLine()) != null) {
+//				if(curr.equals(buddyInfo)) {
+//					try {
+//						FileWriter writer = new FileWriter(new File(filename), true);
+//					    writer.write(this.toString() + "\n");
+//						writer.close();
+//					} catch (FileNotFoundException e) {
+//						e.printStackTrace();
+//						return false;
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//						return false;
+//					}	
+//				}
+//			}
+//			reader.close();	
+//		}
+//	}
+	
 	
 }

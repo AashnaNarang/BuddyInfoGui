@@ -1,12 +1,15 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.Serializable;
+
 import javax.swing.*;
 
-public class AddressBookView extends JFrame implements ActionListener  {
+public class AddressBookView extends JFrame implements ActionListener, Serializable  {
 	private JMenuBar menuBar; 
 	private JMenu menuAddress, menuBuddy;
-	private JMenuItem createAddress, createBuddy, removeBuddy;
+	private JMenuItem createAddress, createBuddy, removeBuddy, saveAddy, addressBookFromFile;
 	private JList<BuddyInfo> buddies;
 	private AddressBook addy;
 	
@@ -17,15 +20,18 @@ public class AddressBookView extends JFrame implements ActionListener  {
 		this.createAddress = new JMenuItem("Create new Address Book");
 		this.createBuddy = new JMenuItem("Add a  Buddy");
 		this.removeBuddy = new JMenuItem("Remove a buddy :(");
+		this.saveAddy = new JMenuItem("Save");
 		
 		
 		this.createAddress.addActionListener(this);
 		this.createBuddy.addActionListener(this);
 		this.removeBuddy.addActionListener(this);
+		this.saveAddy.addActionListener(this);
 		
 		this.menuAddress.add(createAddress);
 		this.menuBuddy.add(createBuddy);
 		this.menuBuddy.add(removeBuddy);
+		this.menuAddress.add(saveAddy);
 		
 		this.menuBar.add(menuAddress);
 		this.menuBar.add(menuBuddy);
@@ -41,7 +47,6 @@ public class AddressBookView extends JFrame implements ActionListener  {
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-
 	}
 	
 	@Override
@@ -67,16 +72,16 @@ public class AddressBookView extends JFrame implements ActionListener  {
 				BuddyInfo b = new BuddyInfo(name, address, phone, age);
 				this.addy.addBuddy(b);
 			}
-		} else {
+		} else if (e.getSource() == this.removeBuddy){
 			if(this.addy == null) {
 				JOptionPane.showMessageDialog(this, "Please create an Address Book first");
 			} else {
 				this.addy.remove(buddies.getSelectedIndex());
 			}
+		} else {
+			this.addy.save("buddies.txt");
 		}
 	}
 	
-	public static void main(String args[]) {
-		AddressBookView view = new AddressBookView();
-	}
+	
 }
