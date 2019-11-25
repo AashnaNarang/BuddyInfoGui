@@ -1,10 +1,18 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import javax.swing.*;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 public class AddressBookView extends JFrame implements ActionListener, Serializable  {
 	private JMenuBar menuBar; 
@@ -54,6 +62,22 @@ public class AddressBookView extends JFrame implements ActionListener, Serializa
 		if(e.getSource() == this.createAddress) {
 			if(this.addy == null) {
 				this.addy = new AddressBook();
+				try {
+					addy = addy.importFromXMLFile("buddies.txt");
+				} catch (SAXException | ParserConfigurationException e1) {
+					// TODO Auto-generated catch block
+					addy = new AddressBook();
+				}
+//				try {
+////					addy = AddressBook.importBuddiesFromFile("buddies.txt");
+////					addy = addy.readObject("buddies.txt");
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					addy = new AddressBook();
+//				} catch (ClassNotFoundException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
 				buddies.setModel(addy);
 				buddies.setVisible(true);
 				this.setTitle("Address Book 1");
@@ -79,7 +103,16 @@ public class AddressBookView extends JFrame implements ActionListener, Serializa
 				this.addy.remove(buddies.getSelectedIndex());
 			}
 		} else {
-			this.addy.save("buddies.txt");
+			addy.exportToXMLFile("buddies.txt");
+//			try {
+//				this.addy.writeObject("buddies.txt");
+//			} catch (FileNotFoundException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
 		}
 	}
 	

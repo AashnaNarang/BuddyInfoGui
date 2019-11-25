@@ -1,13 +1,14 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class BuddyInfo implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8981857269293221592L;
 	private String name, address, phone;
 	private int age;
 
@@ -63,7 +64,7 @@ public class BuddyInfo implements Serializable {
 		if(buddy == this) return true;
 		if(buddy.getClass() != this.getClass()) return false;
 		BuddyInfo bud = (BuddyInfo)buddy;
-		if(bud.getAddress() == this.address & bud.getName() == this.name & bud.getPhone() == this.phone) {
+		if(bud.getAddress().equals(this.address) && bud.getName().equals(this.name) && bud.getPhone().equals(this.phone) && bud.getAge() == this.age) {
 			return true;
 		}
 		return false;
@@ -81,40 +82,21 @@ public class BuddyInfo implements Serializable {
 		return this.age > 18;
 	}
 	
+	public String toXML() {
+		String s = "<BuddyInfo>\n";
+		s += "<name>" + this.name + "</name> \n";
+		s += "<age>" + this.age + "</age> \n";
+		s += "<address>" + this.address + "</address> \n";
+		s += "<phone>" + this.phone + "</phone>\n";
+		s += "</BuddyInfo>";
+		return s;
+	}
+	
 	
 	public static BuddyInfo importBuddy(String info) {
 		String[] s = info.split("#");
-		for(String st : s) {
-			System.out.println(st);
-		}
 		BuddyInfo b = new BuddyInfo(s[0], s[1], s[2], Integer.parseInt(s[3]));
 		return b;		
 	}
-	
-//	public static void removeFromFile(String buddyInfo, String filename) {
-//		String curr = "";
-//		AddressBook book = new AddressBook();
-//		BufferedReader reader;
-//		try {
-//			reader = new BufferedReader(new FileReader(filename));
-//			while ((curr = reader.readLine()) != null) {
-//				if(curr.equals(buddyInfo)) {
-//					try {
-//						FileWriter writer = new FileWriter(new File(filename), true);
-//					    writer.write(this.toString() + "\n");
-//						writer.close();
-//					} catch (FileNotFoundException e) {
-//						e.printStackTrace();
-//						return false;
-//					} catch (IOException e) {
-//						e.printStackTrace();
-//						return false;
-//					}	
-//				}
-//			}
-//			reader.close();	
-//		}
-//	}
-	
 	
 }
